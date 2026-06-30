@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verse of the Day</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background:
+      linear-gradient(rgba(5, 10, 25, 0.68), rgba(5, 10, 25, 0.78)),
+      radial-gradient(circle at top left, #2457a6, #101827 55%, #050816);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .verse-card {
+    width: 86%;
+    max-width: 1500px;
+    padding: 70px 80px;
+    border-radius: 36px;
+    background: rgba(0, 0, 0, 0.38);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    text-align: center;
+  }
+
+  .label {
+    font-size: clamp(28px, 3vw, 58px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    color: #f7d36b;
+  }
+
+  .verse {
+    font-size: clamp(38px, 4.4vw, 82px);
+    line-height: 1.18;
+    font-weight: 700;
+    margin-bottom: 45px;
+  }
+
+  .reference {
+    font-size: clamp(28px, 2.8vw, 54px);
+    font-weight: 700;
+    color: #ffffff;
+    opacity: 0.92;
+  }
+
+  .footer {
+    margin-top: 45px;
+    font-size: clamp(18px, 1.6vw, 30px);
+    opacity: 0.75;
+  }
+</style>
+</head>
+
+<body>
+  <div class="verse-card">
+    <div class="label">Verse of the Day</div>
+    <div class="verse" id="verseText"></div>
+    <div class="reference" id="verseRef"></div>
+    <div class="footer">Versailles United Methodist Church</div>
+  </div>
+
+<script>
+const verses = [
+  {
+    text: "This is the day that the Lord has made. We will rejoice and be glad in it.",
+    ref: "Psalm 118:24"
+  },
+  {
+    text: "Trust in the Lord with all your heart, and don’t lean on your own understanding.",
+    ref: "Proverbs 3:5"
+  },
+  {
+    text: "Be still, and know that I am God.",
+    ref: "Psalm 46:10"
+  },
+  {
+    text: "The Lord is my shepherd; I shall lack nothing.",
+    ref: "Psalm 23:1"
+  },
+  {
+    text: "I can do all things through Christ, who strengthens me.",
+    ref: "Philippians 4:13"
+  },
+  {
+    text: "Let all that you do be done in love.",
+    ref: "1 Corinthians 16:14"
+  },
+  {
+    text: "Your word is a lamp to my feet, and a light for my path.",
+    ref: "Psalm 119:105"
+  }
+];
+
+const today = new Date();
+const start = new Date(today.getFullYear(), 0, 0);
+const dayOfYear = Math.floor((today - start) / 86400000);
+const verse = verses[dayOfYear % verses.length];
+
+document.getElementById("verseText").textContent = `“${verse.text}”`;
+document.getElementById("verseRef").textContent = verse.ref;
+</script>
+</body>
+</html>
