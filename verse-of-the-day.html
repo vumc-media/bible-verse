@@ -69,50 +69,36 @@
 <body>
   <div class="verse-card">
     <div class="label">Verse of the Day</div>
-    <div class="verse" id="verseText"></div>
+    <div class="verse" id="verseText">Loading today's verse...</div>
     <div class="reference" id="verseRef"></div>
     <div class="footer">Versailles United Methodist Church</div>
   </div>
 
 <script>
-const verses = [
-  {
-    text: "This is the day that the Lord has made. We will rejoice and be glad in it.",
-    ref: "Psalm 118:24"
-  },
-  {
-    text: "Trust in the Lord with all your heart, and don’t lean on your own understanding.",
-    ref: "Proverbs 3:5"
-  },
-  {
-    text: "Be still, and know that I am God.",
-    ref: "Psalm 46:10"
-  },
-  {
-    text: "The Lord is my shepherd; I shall lack nothing.",
-    ref: "Psalm 23:1"
-  },
-  {
-    text: "I can do all things through Christ, who strengthens me.",
-    ref: "Philippians 4:13"
-  },
-  {
-    text: "Let all that you do be done in love.",
-    ref: "1 Corinthians 16:14"
-  },
-  {
-    text: "Your word is a lamp to my feet, and a light for my path.",
-    ref: "Psalm 119:105"
+async function loadVerse() {
+  try {
+    const response = await fetch("data/verse.json?v=" + Date.now());
+
+    if (!response.ok) {
+      throw new Error("Verse file could not be loaded.");
+    }
+
+    const verse = await response.json();
+
+    document.getElementById("verseText").textContent = `“${verse.text}”`;
+    document.getElementById("verseRef").textContent =
+      `${verse.reference} (${verse.translation})`;
+
+  } catch (error) {
+    console.error("Unable to load Verse of the Day:", error);
+
+    document.getElementById("verseText").textContent =
+      "Unable to load today's verse.";
+    document.getElementById("verseRef").textContent = "";
   }
-];
+}
 
-const today = new Date();
-const start = new Date(today.getFullYear(), 0, 0);
-const dayOfYear = Math.floor((today - start) / 86400000);
-const verse = verses[dayOfYear % verses.length];
-
-document.getElementById("verseText").textContent = `“${verse.text}”`;
-document.getElementById("verseRef").textContent = verse.ref;
+loadVerse();
 </script>
 </body>
 </html>
